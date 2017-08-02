@@ -19,8 +19,8 @@ router.route('/')
 router.route('/cards')
   .post(function(req, res) {
 
-        var card = new Card();      // create a new instance of the Bear model
-        card.name = req.body.name;  // set the bears name (comes from the request)
+        var card = new Card();      // create a new instance of the Card model
+        card.name = req.body.name;  // set the cards name (comes from the request)
 
         // save the card and check for errors
         card.save(function(err) {
@@ -39,17 +39,54 @@ router.route('/cards')
 
             res.json(cards);
         });
-    });
+    })
+
 
 router.route('/cards/:card_id')
 
-    // get the card with that id (accessed at GET http://localhost:8080/api/bears/:card_id)
-    .get(function(req, res) {
-        Card.findById(req.params.card_id, function(err, card) {
+  // get the card with that id (accessed at GET http://localhost:8080/api/cards/:card_id)
+  .get(function(req, res) {
+      Card.findById(req.params.card_id, function(err, card) {
+          if (err)
+              res.send(err);
+          res.json(card);
+      });
+  })
+
+  .put(function(req, res) {
+
+    // use our card model to find the card we want
+    Card.findById(req.params.card_id, function(err, card) {
+
+
+        if (err){
+          res.send(err);
+        }
+
+        card.name = req.body.name;  // update the cards info
+
+        // save the card
+        card.save(function(err) {
+            if (err){
+              res.send(err);
+            }
+
+            res.json({ message: 'Card updated!' });
+        });
+
+    });
+  })
+
+  .delete(function(req, res) {
+        Card.remove({
+            _id: req.params.card_id
+        }, function(err, bear) {
             if (err)
                 res.send(err);
-            res.json(card);
+
+            res.json({ message: 'Card is successfully deleted' });
         });
     });
+
 
 module.exports = router;    
