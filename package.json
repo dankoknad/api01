@@ -1,0 +1,16 @@
+{
+    "name": "node-express-mongodb-api01",
+    "main": "server.js",
+    "scripts": {
+      "start": "nodemon server.js",
+      "dev": "PORT=3050 nodemon server.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.17.2",
+        "express": "^4.15.3",
+        "mongoose": "^4.11.5"
+    },
+    "devDependencies": {
+        "nodemon": "^1.11.0"
+    }
+}
