@@ -1,13 +1,15 @@
-var express    = require('express');        // call express
-var router = express.Router();              // get an instance of the express Router
+var express  = require('express');        // call express
+var router   = express.Router();              // get an instance of the express Router
 var Card     = require('../models/card');
+var colors   = require('colors');
+
 
 // ROUTES FOR OUR API
 // =============================================================================
 
 router.use(function(req, res, next) {
     // do logging
-    console.log('Something is happening.');
+    console.log('Something is happening.'.cyan);
     next(); // make sure we go to the next routes and don't stop here
 });
 

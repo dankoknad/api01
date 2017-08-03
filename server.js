@@ -2,15 +2,17 @@
 // =============================================================================
 
 // call the packages we need
-var colors = require('colors');
+var colors     = require('colors');
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
+var router     = require('./app/routes/router');
 
-var router = require('./app/routes/router');
-
-mongoose.connect('mongodb://localhost/api01'); 
+mongoose.connect('mongodb://localhost/api01', {
+  useMongoClient: true
+  /* other options */
+}); 
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,9 +31,4 @@ app.use('/api', router);
 // =============================================================================
 
 app.listen(port);
-console.log('Magic happens on port ' + port);
-
-
-console.log(router);
-
-
+console.log(('Magic happens on port ' + port).blue);
