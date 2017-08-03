@@ -21,6 +21,7 @@ router.route('/cards')
 
         var card = new Card();      // create a new instance of the Card model
         card.name = req.body.name;  // set the cards name (comes from the request)
+        card.age = req.body.age;
 
         // save the card and check for errors
         card.save(function(err) {
@@ -41,6 +42,22 @@ router.route('/cards')
         });
     })
 
+router.route('/cardsuppername')
+      .get(function(req, res) {
+        Card.find(function(err, cards) {
+
+            if (err)
+                res.send(err);
+
+            var newCards = cards.map(function(card){
+              var newName = card.name.toUpperCase()
+              card.name = newName
+              return card
+            })
+
+            res.json(cards);
+        });
+    })
 
 router.route('/cards/:card_id')
 
@@ -63,8 +80,8 @@ router.route('/cards/:card_id')
           res.send(err);
         }
 
-        card.name = req.body.name;  // update the cards info
-
+        card.name = req.body.name || card.name;  // update the cards info
+        card.age = req.body.age || card.age;
         // save the card
         card.save(function(err) {
             if (err){
